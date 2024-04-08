@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <!--Crear un formulario que contenga nombre, apellido, horas trabajadas, pago por horas-->
+
+    <form action="">
+        <label for="txtNombre">Nombre</label>
+        <input type="text" id="txtNombre"> <br>
+        <label for="txtApellido">Apellido</label>
+        <input type="text" id="txtApellido"> <br>
+        <label for="txtCategoria">Categoria</label>
+        <input type="text" id="txtCategoria"> <br>
+        <label for="txtHoras">Horas Trabajadas</label>
+        <input type="text" id="txtHoras"> <br>
+        <label for="txtPago">Pago por Hora</label>
+        <input type="text" id="txtPago" disabled> <br>
+        <button type="button" onclick="procesar()">Procesar</button>
+        <button id="btnCancelar" type="button">Cancelar</button>
+    </form>
+    <br>
+    <div id="contenedor">
+        Esto es una prueba.
+    </div>
+</body>
+<script>
+    function procesar(){
+        let nombre = document.getElementById("txtNombre").value;
+        let apellido = document.getElementById("txtApellido").value;
+        let categoria = document.getElementById("txtCategoria").value;
+        let horas = document.getElementById("txtHoras").value;
+        let precio  = obtenerPrecioxCategoria(categoria);
+
+        document.getElementById("txtPago").value = precio;
+        let nombreCompleto = getNombreCompleto(nombre, apellido);
+        let pagoTotal = calcularPagoTotal(horas, precio);
+        mostrarEnDiv(nombreCompleto, pagoTotal );
+    }
+
+    function obtenerPrecioxCategoria(categoria){
+        let precio = 0;
+        switch(categoria){
+            case "a": precio = 10; break;
+            case "b": precio = 15; break;
+            case "c": precio = 20; break;
+            case "d": precio = 25; break;
+            default: 
+                precio=0; break;
+        }
+        return precio;
+    }
+
+    function getNombreCompleto(nombre, apellido){
+        return nombre + " " + apellido;
+    }
+    
+    function mostrarEnDiv(nombreCompleto, pagoTotal){
+        /*let resultado =  "Nombre Completo : " + nombreCompleto + "<br>" + 
+                         "Pago Total : "+ pagoTotal;
+        */
+        let resultado = 
+        `   
+            Nombre Completo : ${nombreCompleto} <br>
+            Pago Total      : ${pagoTotal}
+        `;                
+        document.getElementById("contenedor").innerHTML= resultado;
+    }
+
+    function calcularPagoTotal(hora, pago){
+        return parseFloat(hora) * parseFloat(pago);
+    }
+
+
+
+
+
+
+
+    let botonLimpiar = document.getElementById("btnCancelar");
+    botonLimpiar.addEventListener("click", function(){
+        document.getElementById("txtNombre").value= "";
+        document.getElementById("txtApellido").value = "";
+        document.getElementById("txtHoras").value = "";
+        document.getElementById("txtPago").value = "";
+        document.getElementById("contenedor").innerHTML = "";
+    });
+</script>
+
+
+
+</html>
